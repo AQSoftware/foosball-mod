@@ -4,11 +4,7 @@ function CSelectPlayers (){
     var _oButP1;
     var _oButP2;
     var _oText;
-    var _pStartPosExit;
-    var _pStartPosAudio;
     var _pStartPosFullscreen;
-    var _oButExit;
-    var _oAudioToggle;
     var _oButFullscreen;
     var _fRequestFullScreen = null;
     var _fCancelFullScreen = null;
@@ -38,19 +34,6 @@ function CSelectPlayers (){
         _oText.textAlign = "center";
         _oContainer.addChild(_oText);
         
-        var oSprite = s_oSpriteLibrary.getSprite('but_exit');
-	_pStartPosExit = {x:CANVAS_WIDTH - (oSprite.width/2)-10,y:(oSprite.height/2)+10};
-        _oButExit = new CGfxButton(_pStartPosExit.x,_pStartPosExit.y,oSprite,_oContainer);
-        _oButExit.addEventListener(ON_MOUSE_UP, this._onExit, this);
-        
-        _iHeightToggle = oSprite.height;
-        
-        if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
-            _pStartPosAudio = {x:_oButExit.getX() - oSprite.width-10,y:(oSprite.height/2)+10 }
-            _oAudioToggle = new CToggle(_pStartPosAudio.x,_pStartPosAudio.y,s_oSpriteLibrary.getSprite('audio_icon'),s_bAudioActive,_oContainer);
-            _oAudioToggle.addEventListener(ON_MOUSE_UP, this._onAudioToggle, this);
-        }
-        
         var doc = window.document;
         var docEl = doc.documentElement;
         _fRequestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
@@ -64,6 +47,8 @@ function CSelectPlayers (){
             oSprite = s_oSpriteLibrary.getSprite('but_fullscreen');
             _pStartPosFullscreen = {x: oSprite.width/4 + 10,y:(oSprite.height/2)+10};
 
+            _iHeightToggle = oSprite.height;
+
             _oButFullscreen = new CToggle(_pStartPosFullscreen.x,_pStartPosFullscreen.y,oSprite,s_bFullscreen,_oContainer);
             _oButFullscreen.addEventListener(ON_MOUSE_UP, this._onFullscreenRelease, this);
         }
@@ -73,12 +58,8 @@ function CSelectPlayers (){
     };
     
     this.refreshButtonPos = function(iNewX,iNewY){
-        _oButExit.setPosition(_pStartPosExit.x - iNewX,_pStartPosExit.y + iNewY);
-        if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
-                _oAudioToggle.setPosition(_pStartPosAudio.x - iNewX,iNewY + _pStartPosAudio.y);
-        }
         if (_fRequestFullScreen && inIframe() === false){
-            _oButFullscreen.setPosition(_pStartPosFullscreen.x + iNewX,_pStartPosFullscreen.y + iNewY);
+            _oButFullscreen.setPosition(_pStartPosFullscreen.x + iNewX-200,_pStartPosFullscreen.y + iNewY);
         }
     };
     
@@ -93,11 +74,6 @@ function CSelectPlayers (){
        s_oSelectPlayers;
     };
     
-    this._onAudioToggle = function(){
-        Howler.mute(s_bAudioActive);
-	s_bAudioActive = !s_bAudioActive;
-    };
-    
     this.resetFullscreenBut = function(){
 	_oButFullscreen.setActive(s_bFullscreen);
     };
@@ -110,11 +86,6 @@ function CSelectPlayers (){
 	}
 	
 	sizeHandler();
-    };
-    
-    this._onExit = function(){
-        this.unload();
-        s_oMain.gotoMenu();
     };
     
     this.init();

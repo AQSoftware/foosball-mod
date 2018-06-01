@@ -1,5 +1,4 @@
 function CInterface(){
-    var _oAudioToggle;
     var _oButExit;
     var _oContainer;
     var _oButFullscreen;
@@ -9,8 +8,6 @@ function CInterface(){
     var _fCancelFullScreen = null;
     var _oContainerScore;
     var _pStartPosContainerScore; 
-    var _pStartPosExit;
-    var _pStartPosAudio;
     var _pStartPosFullscreen;
     var _oButUpP1;
     var _oButDownP1;
@@ -24,32 +21,11 @@ function CInterface(){
     var _oScoreTextRed;
     var _oButHelp;
     var _pStartPosButHelp;
-    var _oButPause;
-    var _pStartPosPause;
     
     this._init = function(){  
         _oContainer = new createjs.Container();
         _bMobileInitialized = false;
         s_oStage.addChild(_oContainer);
-        var oExitX; 
-        var oSprite = s_oSpriteLibrary.getSprite('but_exit');
-        _pStartPosExit = {x: CANVAS_WIDTH - (oSprite.height/2)- 10, y: (oSprite.height/2) + 10};
-        _oButExit = new CGfxButton(_pStartPosExit.x, _pStartPosExit.y, oSprite,_oContainer);
-        _oButExit.addEventListener(ON_MOUSE_UP, this._onExit, this);
-        
-        oExitX = CANVAS_WIDTH - (oSprite.width/2) - 140;
-        _pStartPosPause = {x: oExitX, y: (oSprite.height/2) + 10};
-        oSprite = s_oSpriteLibrary.getSprite("but_pause");
-        _oButPause = new CGfxButton(_pStartPosPause.x,_pStartPosPause.y,oSprite,_oContainer);
-        _oButPause.addEventListener(ON_MOUSE_UP,function(){new CPause();},this);
-        
-        _pStartPosAudio = {x: _pStartPosPause.x-oSprite.width-10,y: _pStartPosPause.y};
-        
-        if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
-            var oSprite = s_oSpriteLibrary.getSprite('audio_icon');
-            _oAudioToggle = new CToggle(_pStartPosAudio.x,_pStartPosAudio.y,oSprite,s_bAudioActive, _oContainer);
-            _oAudioToggle.addEventListener(ON_MOUSE_UP, this._onAudioToggle, this);          
-        }
 
         var doc = window.document;
         var docEl = doc.documentElement;
@@ -62,18 +38,14 @@ function CInterface(){
         
         if (_fRequestFullScreen && !inIframe()){
             oSprite = s_oSpriteLibrary.getSprite("but_fullscreen");
-            _pStartPosFullscreen = {x:oSprite.width/4 + 10,y:oSprite.height/2+10};
-            _pStartPosButHelp = {x:_pStartPosFullscreen.x+oSprite.width/2+10,y:_pStartPosFullscreen.y};
+            _pStartPosFullscreen = {x:oSprite.width/4+10,y:oSprite.height/2+10};
+            _pStartPosButHelp = {x:oSprite.width/2+10,y:oSprite.height/2+10};
             _oButFullscreen = new CToggle(_pStartPosFullscreen.x,_pStartPosFullscreen.y,oSprite,s_bFullscreen,_oContainer);
             _oButFullscreen.addEventListener(ON_MOUSE_UP,this._onFullscreen,this);
         }else{
             _pStartPosButHelp = {x:oSprite.width/4+10,y:oSprite.height/2+10};
         }
-        
-        oSprite = s_oSpriteLibrary.getSprite("but_help");
-        _oButHelp = new CGfxButton(_pStartPosButHelp.x,_pStartPosButHelp.y,oSprite,_oContainer);
-        _oButHelp.addEventListener(ON_MOUSE_UP,function(){new CPanelTutorial();},this);
-        
+                
         _pStartPosContainerScore= {x:CANVAS_WIDTH/2,y:83};
         _oContainerScore = new createjs.Container();
         _oContainer.addChild(_oContainerScore);
@@ -98,21 +70,13 @@ function CInterface(){
        this.refreshButtonPos(s_iOffsetX,s_iOffsetY);
     };
     
-    this.unload = function(){
-        if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
-            _oAudioToggle.unload();
-            _oAudioToggle = null;
-        }
-
-        _oButExit.unload();
-        
+    this.unload = function(){        
         s_oStage.removeChild(_oContainer);
         if (_fRequestFullScreen && !inIframe()) {
             _oButFullscreen.unload();
         }        
 
         s_oInterface = null;
-        
     };
     
     this.refreshPlayersScore = function (iScoreP1,iScoreP2){
@@ -129,7 +93,8 @@ function CInterface(){
         var oSprite = s_oSpriteLibrary.getSprite("arrow");
         
         if (!s_b2Players){
-            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+240};
+            // _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+240};
+            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: 220};
             _pStartPosButDownP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+450};
             _oButUpP1 = new CGfxButton(_pStartPosButUpP1.x,_pStartPosButUpP1.y,oSprite,_oContainer);
             _oButUpP1.setMuted(true);
@@ -138,9 +103,11 @@ function CInterface(){
             _oButDownP1.getButtonImage().rotation= 180;
             
         }else{
-            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+240};
+            // _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+240};
+            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: 220};
             _pStartPosButDownP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+450};
-            _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+240};
+            // _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+240};
+            _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+800, y: 220};
              _pStartPosButDownP2= {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+450};
             _oButUpP1 = new CGfxButton(_pStartPosButUpP1.x,_pStartPosButUpP1.y,oSprite,_oContainer);
             _oButUpP1.setMuted(true);
@@ -166,16 +133,9 @@ function CInterface(){
     
     this.refreshButtonPos = function(iNewX,iNewY){
         _oContainerScore.y = _pStartPosContainerScore.y +iNewY;
-        _oButHelp.setPosition(_pStartPosButHelp.x+iNewX,_pStartPosButHelp.y+iNewY);
         
-        _oButExit.setPosition(_pStartPosExit.x - iNewX,iNewY + _pStartPosExit.y);
-        _oButPause.setPosition(_pStartPosPause.x - iNewX,iNewY + _pStartPosPause.y);
-        if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
-            _oAudioToggle.setPosition(_pStartPosAudio.x - iNewX,iNewY + _pStartPosAudio.y);
-        }
-
         if (_fRequestFullScreen && !inIframe()) {
-            _oButFullscreen.setPosition(_pStartPosFullscreen.x + iNewX, _pStartPosFullscreen.y + iNewY);
+            _oButFullscreen.setPosition(_pStartPosFullscreen.x + iNewX-200, _pStartPosFullscreen.y + iNewY);
         }
         
         if (s_bMobile){
@@ -230,13 +190,16 @@ function CInterface(){
 
 
     this._onFullscreen = function(){
+        // s_oGame.gameOver();
+        // return;
+
         if(s_bFullscreen) { 
-		_fCancelFullScreen.call(window.document);
-	}else{
-		_fRequestFullScreen.call(window.document.documentElement);
-	}
+    		_fCancelFullScreen.call(window.document);
+	    }else{
+		    _fRequestFullScreen.call(window.document.documentElement);
+	    }
 	
-	sizeHandler();
+	    sizeHandler();
     };
     
     s_oInterface = this;

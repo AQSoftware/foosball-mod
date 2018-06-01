@@ -8,8 +8,6 @@ function CEndPanel(oSpriteBg,iWinner){
     var _oScoreTextBack;
     var _oScoreText;
     var _iScore;
-    var _oButRestart;
-    var _oButHome;
     var _oRestartList;
     var _oHomeList;
     var _oButNext;
@@ -73,17 +71,10 @@ function CEndPanel(oSpriteBg,iWinner){
         _oGroup.addChild(oShape,_oBg, _oScoreTextBack,_oScoreText,_oMsgTextBack,_oMsgText);
 
         s_oStage.addChild(_oGroup);
-        var oSprite = s_oSpriteLibrary.getSprite("but_restart");
-        _oButRestart = new CGfxButton(CANVAS_WIDTH/2+100,CANVAS_HEIGHT/2+150,oSprite,_oGroup);
-        
-        oSprite = s_oSpriteLibrary.getSprite("but_home");
-        _oButHome = new CGfxButton(CANVAS_WIDTH/2-100,CANVAS_HEIGHT/2+150,oSprite,_oGroup);
         
         if (s_bFriendly===false&&s_oLevelSettings.getCurrentLevel()!==s_oLevelSettings.getNumLevel()-1){
             if (_iWinner!==0&&s_oLevelSettings.getCurrentLevel()>=s_iLastLevel-1){
             }else{
-                _oButRestart.setX(CANVAS_WIDTH/2);
-                _oButHome.setX(_oButRestart.getX()-200);
                 oSprite = s_oSpriteLibrary.getSprite("but_next");
                 _oButNext = new CGfxButton(CANVAS_WIDTH/2+200,CANVAS_HEIGHT/2+150,oSprite,_oGroup);
                 _oButNext.addEventListener(ON_MOUSE_DOWN,this.onButNext,this);
@@ -117,8 +108,6 @@ function CEndPanel(oSpriteBg,iWinner){
     };
     
     this._initListener = function(){
-        _oButHome.addEventListener(ON_MOUSE_DOWN,this._onExit,this);
-        _oButRestart.addEventListener(ON_MOUSE_DOWN,this._onRestart, this);
     };
     
     this.show = function(iScore,iWinner){

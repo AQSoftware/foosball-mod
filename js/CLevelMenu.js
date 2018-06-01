@@ -5,12 +5,8 @@ function CLevelMenu(){
     var _aPointsX;
     var _aContainerPage;
     var _pStartPosSelect;
-    var _pStartPosExit;
-    var _pStartPosAudio;
     var _pStartPosFullscreen;
     
-    var _oButExit;
-    var _oAudioToggle;
     var _oArrowRight = null;
     var _oArrowLeft = null;
     var _oTextLevel;
@@ -42,20 +38,7 @@ function CLevelMenu(){
         _oTextLevel.x = _pStartPosSelect.x;
         _oTextLevel.textAlign = "center";
         s_oStage.addChild(_oTextLevel);
-
-        var oSprite = s_oSpriteLibrary.getSprite('but_exit');
-	_pStartPosExit = {x:CANVAS_WIDTH - (oSprite.width/2)-10,y:(oSprite.height/2)+10};
-        _oButExit = new CGfxButton(_pStartPosExit.x,_pStartPosExit.y,oSprite,s_oStage);
-        _oButExit.addEventListener(ON_MOUSE_UP, this._onExit, this);
-        
-        _iHeightToggle = oSprite.height;
-        
-        if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
-            _pStartPosAudio = {x:_oButExit.getX() - oSprite.width-10,y:(oSprite.height/2)+10 }
-            _oAudioToggle = new CToggle(_pStartPosAudio.x,_pStartPosAudio.y,s_oSpriteLibrary.getSprite('audio_icon'),s_bAudioActive,s_oStage);
-            _oAudioToggle.addEventListener(ON_MOUSE_UP, this._onAudioToggle, this);
-        }
-        
+                
         var doc = window.document;
         var docEl = doc.documentElement;
         _fRequestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
@@ -69,6 +52,8 @@ function CLevelMenu(){
             oSprite = s_oSpriteLibrary.getSprite('but_fullscreen');
             _pStartPosFullscreen = {x: oSprite.width/4 + 10,y:(oSprite.height/2)+10};
 
+            _iHeightToggle = oSprite.height;
+            
             _oButFullscreen = new CToggle(_pStartPosFullscreen.x,_pStartPosFullscreen.y,oSprite,s_bFullscreen,s_oStage);
             _oButFullscreen.addEventListener(ON_MOUSE_UP, this._onFullscreenRelease, this);
         }
@@ -111,16 +96,10 @@ function CLevelMenu(){
         for(var i=0;i<_aLevelButs.length;i++){
             _aLevelButs[i].unload();
         }  
-        
-        if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
-            _oAudioToggle.unload();
-        }
-        
+                
         if (_fRequestFullScreen && inIframe() === false){
             _oButFullscreen.unload();
         }
-        
-        _oButExit.unload();
         
         if(_oArrowLeft !== null){
             _oArrowLeft.unload();
@@ -132,10 +111,6 @@ function CLevelMenu(){
     
     this.refreshButtonPos = function(iNewX,iNewY){
         _oTextLevel.y = _pStartPosSelect.y + iNewY;
-        _oButExit.setPosition(_pStartPosExit.x - iNewX,_pStartPosExit.y + iNewY);
-        if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
-                _oAudioToggle.setPosition(_pStartPosAudio.x - iNewX,iNewY + _pStartPosAudio.y);
-        }
         if (_fRequestFullScreen && inIframe() === false){
             _oButFullscreen.setPosition(_pStartPosFullscreen.x + iNewX,_pStartPosFullscreen.y + iNewY);
         }
@@ -237,11 +212,6 @@ function CLevelMenu(){
         s_oLevelSettings.loadLevel(iLevel);
         s_oMain.gotoGame();
         this.unload();
-    };
-    
-    this._onAudioToggle = function(){
-        Howler.mute(s_bAudioActive);
-	s_bAudioActive = !s_bAudioActive;
     };
     
     this.resetFullscreenBut = function(){

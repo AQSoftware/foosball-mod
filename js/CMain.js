@@ -53,7 +53,7 @@ function CMain(oData){
             s_bStorageAvailable = false;
         }
         
-	s_oMain._loadImages();
+	    s_oMain._loadImages();
 		
         if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
             s_oMain._initSounds();
@@ -173,9 +173,9 @@ function CMain(oData){
     this._onPreloaderComplete = function(){
         _oPreloader.unload();
             
-        if (!isIOS()) {
-            s_oSoundtrack = playSound('soundtrack', 1, true);
-        }
+        // if (!isIOS()) {
+        //     s_oSoundtrack = playSound('soundtrack', 1, true);
+        // }
         
         this.gotoMenu();
     };
@@ -185,9 +185,26 @@ function CMain(oData){
     };
     
     this.gotoMenu = function(){
-        _oMenu = new CMenu();
-        _iState = STATE_MENU;
-    }; 
+        // _oMenu = new CMenu();
+        // _iState = STATE_MENU;
+
+        this.goFriendly();
+        // this.goTournament();
+    };
+
+    this.goTournament = function() {
+        $(s_oMain).trigger("start_session");
+        s_bFriendly = false;
+        s_oMain.gotoLevelMenu();
+    };
+
+    this.goFriendly = function() {
+        $(s_oMain).trigger("start_session");
+        s_bFriendly = true;
+        CPU_SPEED_STICKS = CPU_SPEED_STICK_FRIENDLY;
+        POINTS_TO_WIN = NUM_GOAL_FRIENDLY;
+            s_oMain.gotoSelectPlayers();
+    };    
 
     this.gotoGame = function(){
         _oGame = new CGame(_oData);   						

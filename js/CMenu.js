@@ -2,13 +2,9 @@ function CMenu(){
     var _oBg;
     var _oButPlay;
     var _oFade;
-    var _oAudioToggle;
-    var _oCreditsBut;
     var _oButFullscreen;
     var _fRequestFullScreen = null;
     var _fCancelFullScreen = null;
-    var _pStartPosCredits;
-    var _pStartPosAudio;
     var _pStartPosFullscreen;
     var _oButTournament;
     var _oLogoMenu;
@@ -34,11 +30,6 @@ function CMenu(){
         _oButTournament = new CGfxButton(_pStartPosTournamentBut.x,_pStartPosTournamentBut.y,oSprite,s_oStage);
         _oButTournament.addEventListener(ON_MOUSE_DOWN, this._onButTournamentRelease, this);
      
-        var oSprite = s_oSpriteLibrary.getSprite('but_info');
-        _pStartPosCredits = {x: (oSprite.height/2) + 10, y: (oSprite.height/2) + 10};            
-        _oCreditsBut = new CGfxButton((CANVAS_WIDTH/2),CANVAS_HEIGHT -240,oSprite, s_oStage);
-        _oCreditsBut.addEventListener(ON_MOUSE_UP, this._onCreditsBut, this);
-     
         oSprite = s_oSpriteLibrary.getSprite("but_delete_save");
         if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
             _pStartPosDeleteSave = {x: CANVAS_WIDTH - (oSprite.height*1.5)- 5, y: (oSprite.height/2) + 10};
@@ -56,13 +47,6 @@ function CMenu(){
        _oLogoMenu.x = -700;
        s_oStage.addChild(_oLogoMenu);
      
-        if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
-            var oSprite = s_oSpriteLibrary.getSprite('audio_icon');
-            _pStartPosAudio = {x: CANVAS_WIDTH - (oSprite.height/2), y: (oSprite.height/2) + 10};            
-            _oAudioToggle = new CToggle(_pStartPosAudio.x,_pStartPosAudio.y,oSprite,s_bAudioActive, s_oStage);
-            _oAudioToggle.addEventListener(ON_MOUSE_UP, this._onAudioToggle, this);          
-        }
-
         var doc = window.document;
         var docEl = doc.documentElement;
         _fRequestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
@@ -74,7 +58,7 @@ function CMenu(){
 
         if (_fRequestFullScreen && !inIframe()){
             oSprite = s_oSpriteLibrary.getSprite("but_fullscreen")
-            _pStartPosFullscreen = {x:_pStartPosCredits.x + oSprite.width/2 + 10,y:(oSprite.height/2) + 10};
+            _pStartPosFullscreen = {x: oSprite.width/4 + 10,y:(oSprite.height/2) + 10};
             _oButFullscreen = new CToggle(_pStartPosFullscreen.x,_pStartPosFullscreen.y,oSprite,s_bFullscreen, s_oStage);
             _oButFullscreen.addEventListener(ON_MOUSE_UP,this._onFullscreen,this);
         }
@@ -109,14 +93,7 @@ function CMenu(){
         _oDeleteSaveBut.unload()
         _oButPlay = null;
         _oFade.visible = false;
-        
-        _oCreditsBut.unload();
-        
-        if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
-            _oAudioToggle.unload();
-            _oAudioToggle = null;
-        }
-        
+                
         if (_fRequestFullScreen && !inIframe()){
                 _oButFullscreen.unload();
         }
@@ -129,19 +106,10 @@ function CMenu(){
     this.refreshButtonPos = function(iNewX,iNewY){
         _oButPlay.setPosition(_pStartPosFriendlyBut.x,_pStartPosFriendlyBut.y-iNewY);
         _oButTournament.setPosition(_pStartPosTournamentBut.x,_pStartPosTournamentBut.y-iNewY);
-        _oDeleteSaveBut.setPosition(_pStartPosDeleteSave.x-iNewX,_pStartPosDeleteSave.y+iNewY);
-        _oCreditsBut.setPosition(_pStartPosCredits.x + iNewX,iNewY + _pStartPosCredits.y);
-        if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
-            _oAudioToggle.setPosition(_pStartPosAudio.x - iNewX,iNewY + _pStartPosAudio.y);
-        }
         if (_fRequestFullScreen && !inIframe()){
+                // _oButFullscreen.setPosition(_pStartPosFullscreen.x + iNewX, _pStartPosFullscreen.y + iNewY);
                 _oButFullscreen.setPosition(_pStartPosFullscreen.x + iNewX, _pStartPosFullscreen.y + iNewY);
         }
-    };
-    
-    this._onAudioToggle = function(){
-        Howler.mute(s_bAudioActive);
-        s_bAudioActive = !s_bAudioActive;
     };
     
     this._onCreditsBut = function(){
@@ -163,13 +131,9 @@ function CMenu(){
     };
     
     this._onButFriendlyRelease = function(){
-        
         this.unload();
-        $(s_oMain).trigger("start_session");
-        s_bFriendly = true;
-        CPU_SPEED_STICKS = CPU_SPEED_STICK_FRIENDLY;
-        POINTS_TO_WIN = NUM_GOAL_FRIENDLY;
-            s_oMain.gotoSelectPlayers();
+
+        this.goFriendly();
         
         if (isIOS() && (s_oSoundtrack === null||s_oSoundtrack === undefined)){
                 s_oSoundtrack = playSound('soundtrack', 1, true);
@@ -180,14 +144,26 @@ function CMenu(){
     this._onButTournamentRelease = function(){
         this.unload();
         
-        $(s_oMain).trigger("start_session");
-        s_bFriendly = false;
-        s_oMain.gotoLevelMenu();
-        
+        this.goTournament();
+
         if (isIOS() && (s_oSoundtrack === null||s_oSoundtrack === undefined)){
             s_oSoundtrack = playSound('soundtrack', 1, true); 
         }
     };
+
+    this.goTournament = function() {
+        $(s_oMain).trigger("start_session");
+        s_bFriendly = false;
+        s_oMain.gotoLevelMenu();
+    }
+
+    this.goFriendly = function() {
+        $(s_oMain).trigger("start_session");
+        s_bFriendly = true;
+        CPU_SPEED_STICKS = CPU_SPEED_STICK_FRIENDLY;
+        POINTS_TO_WIN = NUM_GOAL_FRIENDLY;
+            s_oMain.gotoSelectPlayers();
+    }
 	
     s_oMenu = this;
     
