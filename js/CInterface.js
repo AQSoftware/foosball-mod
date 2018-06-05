@@ -43,7 +43,8 @@ function CInterface(){
             _oButFullscreen = new CToggle(_pStartPosFullscreen.x,_pStartPosFullscreen.y,oSprite,s_bFullscreen,_oContainer);
             _oButFullscreen.addEventListener(ON_MOUSE_UP,this._onFullscreen,this);
         }else{
-            _pStartPosButHelp = {x:oSprite.width/4+10,y:oSprite.height/2+10};
+            // _pStartPosButHelp = {x:oSprite.width/4+10,y:oSprite.height/2+10};
+            _pStartPosButHelp = {x:100,y:100};
         }
                 
         _pStartPosContainerScore= {x:CANVAS_WIDTH/2,y:83};

@@ -36,7 +36,7 @@ function CMain(oData){
         //ADD PRELOADER
         _oPreloader = new CPreloader();
 		
-	
+        defaultLifeCycle.setOnResetCallback(this.onReset.bind(this));
     };
     
     this.preloaderReady = function(){
@@ -177,6 +177,12 @@ function CMain(oData){
         //     s_oSoundtrack = playSound('soundtrack', 1, true);
         // }
         
+        this.onReset();
+
+        defaultLifeCycle.informReady();
+    };
+
+    this.onReset = function() {
         this.gotoMenu();
     };
     
@@ -299,3 +305,6 @@ var s_oSpriteLibrary;
 var s_oSoundtrack = null;
 var s_oCanvas;
 var s_aSounds;
+
+var defaultLifeCycle = window.AQCore.defaultLifeCycle;
+var Utils = window.AQCore.Utils;
