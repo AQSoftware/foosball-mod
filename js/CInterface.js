@@ -95,7 +95,7 @@ function CInterface(){
         
         if (!s_b2Players){
             // _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+240};
-            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: 220};
+            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y:  CANVAS_HEIGHT/2-450};
             _pStartPosButDownP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+450};
             _oButUpP1 = new CGfxButton(_pStartPosButUpP1.x,_pStartPosButUpP1.y,oSprite,_oContainer);
             _oButUpP1.setMuted(true);
@@ -105,10 +105,10 @@ function CInterface(){
             
         }else{
             // _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+240};
-            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: 220};
+            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2-450};
             _pStartPosButDownP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+450};
             // _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+240};
-            _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+800, y: 220};
+            _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+800, y:  CANVAS_HEIGHT/2-450};
              _pStartPosButDownP2= {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+450};
             _oButUpP1 = new CGfxButton(_pStartPosButUpP1.x,_pStartPosButUpP1.y,oSprite,_oContainer);
             _oButUpP1.setMuted(true);

@@ -16,7 +16,8 @@ function CMain(oData){
 		s_oStage.preventSelection = false;
         createjs.Touch.enable(s_oStage);
 		
-	s_bMobile = jQuery.browser.mobile;
+	// s_bMobile = jQuery.browser.mobile;
+	s_bMobile = true;
         if(s_bMobile === false){
             s_oStage.enableMouseOver(FPS);  
             $('body').on('contextmenu', '#canvas', function(e){ return false; });
