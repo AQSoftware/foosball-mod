@@ -210,7 +210,16 @@ function CMain(oData){
         s_bFriendly = true;
         CPU_SPEED_STICKS = CPU_SPEED_STICK_FRIENDLY;
         POINTS_TO_WIN = NUM_GOAL_FRIENDLY;
-            s_oMain.gotoSelectPlayers();
+        // s_oMain.gotoSelectPlayers();
+
+
+        /**
+         * to compile to ONE/TWO players please swap the comment on the two statements below 
+         * */
+        s_b2Players = false;// ONE player
+        // s_b2Players = true;// TWO players
+
+        s_oMain.gotoGame();
     };    
 
     this.gotoGame = function(){

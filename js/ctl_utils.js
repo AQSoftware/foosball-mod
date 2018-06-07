@@ -315,7 +315,7 @@ function createBitmap(oSprite, iWidth, iHeight){
 	var hitObject = new createjs.Shape();
 	
 	if (iWidth && iHeight){
-		hitObject .graphics.beginFill("#fff").drawRect(0, 0, iWidth, iHeight);
+        hitObject .graphics.beginFill("#fff").drawRect(0, 0, iWidth, iHeight);
 	}else{
 		hitObject .graphics.beginFill("#ff0").drawRect(0, 0, oSprite.width, oSprite.height);
 	}

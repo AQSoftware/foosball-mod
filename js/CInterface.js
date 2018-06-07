@@ -13,6 +13,10 @@ function CInterface(){
     var _oButDownP1;
     var _oButUpP2;
     var _oButDownP2;
+    var _oButUpP1_W;
+    var _oButDownP1_W;
+    var _oButUpP2_W;
+    var _oButDownP2_W;
     var _pStartPosButUpP1;
     var _pStartPosButDownP1;
     var _pStartPosButUpP2;
@@ -21,6 +25,9 @@ function CInterface(){
     var _oScoreTextRed;
     var _oButHelp;
     var _pStartPosButHelp;
+
+    var ARROW_BTN_W = 300;
+    var ARROW_BTN_H = 200;    
     
     this._init = function(){  
         _oContainer = new createjs.Container();
@@ -94,12 +101,11 @@ function CInterface(){
         var oSprite = s_oSpriteLibrary.getSprite("arrow");
         
         if (!s_b2Players){
-            // _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+240};
-            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y:  CANVAS_HEIGHT/2-450};
-            _pStartPosButDownP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+450};
-            _oButUpP1 = new CGfxButton(_pStartPosButUpP1.x,_pStartPosButUpP1.y,oSprite,_oContainer);
+            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y:  CANVAS_HEIGHT/2+450};
+            _pStartPosButDownP1 = {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+450};
+            _oButUpP1 = new CGfxButtonArrow(_pStartPosButUpP1.x,_pStartPosButUpP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
             _oButUpP1.setMuted(true);
-            _oButDownP1 = new CGfxButton(_pStartPosButDownP1.x,_pStartPosButDownP1.y,oSprite,_oContainer);
+            _oButDownP1 = new CGfxButtonArrow(_pStartPosButDownP1.x,_pStartPosButDownP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
             _oButDownP1.setMuted(true);
             _oButDownP1.getButtonImage().rotation= 180;
             
@@ -110,13 +116,13 @@ function CInterface(){
             // _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+240};
             _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+800, y:  CANVAS_HEIGHT/2-450};
              _pStartPosButDownP2= {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+450};
-            _oButUpP1 = new CGfxButton(_pStartPosButUpP1.x,_pStartPosButUpP1.y,oSprite,_oContainer);
+            _oButUpP1 = new CGfxButtonArrow(_pStartPosButUpP1.x,_pStartPosButUpP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
             _oButUpP1.setMuted(true);
-            _oButDownP1 = new CGfxButton(_pStartPosButDownP1.x,_pStartPosButDownP1.y,oSprite,_oContainer);
+            _oButDownP1 = new CGfxButtonArrow(_pStartPosButDownP1.x,_pStartPosButDownP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
             _oButDownP1.setMuted(true);
-            _oButUpP2 = new CGfxButton(_pStartPosButUpP2.x,_pStartPosButUpP2.y,oSprite,_oContainer);
+            _oButUpP2 = new CGfxButtonArrow(_pStartPosButUpP2.x,_pStartPosButUpP2.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
             _oButUpP2.setMuted(true);
-            _oButDownP2 = new CGfxButton(_pStartPosButDownP2.x,_pStartPosButDownP2.y,oSprite,_oContainer);
+            _oButDownP2 = new CGfxButtonArrow(_pStartPosButDownP2.x,_pStartPosButDownP2.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
             _oButDownP2.setMuted(true);
             _oButDownP1.getButtonImage().rotation= 180;
             _oButDownP2.getButtonImage().rotation= 180;
@@ -143,10 +149,12 @@ function CInterface(){
             if (_bMobileInitialized){
                 if (!s_b2Players){
                     _oButUpP1.setPosition(_pStartPosButUpP1.x+iNewX,_pStartPosButUpP1.y-iNewY);
-                    _oButDownP1.setPosition(_pStartPosButDownP1.x+iNewX,_pStartPosButDownP1.y-iNewY);
+                    _oButDownP1.setPosition(_pStartPosButDownP1.x-iNewX,_pStartPosButDownP1.y-iNewY);
                 }else{
                     _oButUpP1.setPosition(_pStartPosButUpP1.x+iNewX,_pStartPosButUpP1.y-iNewY);
                     _oButDownP1.setPosition(_pStartPosButDownP1.x+iNewX,_pStartPosButDownP1.y-iNewY);
+                    // _oButDownP1_W.x = _pStartPosButDownP1.x+iNewX
+                    // _oButDownP1_W.y = _pStartPosButDownP1.y-iNewY;
                     _oButUpP2.setPosition(_pStartPosButUpP2.x-iNewX,_pStartPosButUpP2.y-iNewY);
                     _oButDownP2.setPosition(_pStartPosButDownP2.x-iNewX,_pStartPosButDownP2.y-iNewY);
                 }

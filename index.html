@@ -24,6 +24,7 @@
         <script type="text/javascript" src="js/CStick.js"></script>
         <script type="text/javascript" src="js/CToggle.js"></script>
         <script type="text/javascript" src="js/CGfxButton.js"></script>
+        <script type="text/javascript" src="js/CGfxButtonArrow.js"></script>
         <script type="text/javascript" src="js/CMenu.js"></script>
         <script type="text/javascript" src="js/CGame.js"></script>
         <script type="text/javascript" src="js/CInterface.js"></script>
@@ -56,7 +57,7 @@
 
             function init_AQ_API() {
                 defaultLifeCycle.setOnDataCallback(onData);
-                
+                // onData({});
                 defaultLifeCycle.setAppData({ backgroundImage: Utils.relativeToAbsolutePath('sprites/field_alt.png') });
             }
 
