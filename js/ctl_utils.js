@@ -149,114 +149,132 @@ function inIframe() {
 
 //THIS FUNCTION MANAGES THE CANVAS SCALING TO FIT PROPORTIONALLY THE GAME TO THE CURRENT DEVICE RESOLUTION
 function sizeHandler() {
-	window.scrollTo(0, 1);
+    window.scrollTo(0, 1);
 
-	if (!$("#canvas")){
-		return;
-	}
+    if (!$("#canvas")) {
+        return;
+    }
 
-        
 
-	var h;
-        var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
 
-        if(iOS){
-            h = getIOSWindowHeight();
-        }else{ 
-            h = getSize("Height");
-        }
-        
-        var w = getSize("Width");
+    var h;
+    var iOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false);
 
-        _checkOrientation(w,h);
+    if (iOS) {
+        h = getIOSWindowHeight();
+    } else {
+        h = getSize("Height");
+    }
 
-	var multiplier = Math.min((h / CANVAS_HEIGHT), (w / CANVAS_WIDTH));
+    var w = getSize("Width");
 
-	var destW = CANVAS_WIDTH * multiplier;
-	var destH = CANVAS_HEIGHT * multiplier;
-        
-        
-        var iAdd = 0;
-        if (destH < h){
-            iAdd = h-destH;
-            destH += iAdd;
-            destW += iAdd*(CANVAS_WIDTH/CANVAS_HEIGHT);
-        }else  if (destW < w){
-            iAdd = w-destW;
-            destW += iAdd;
-            destH += iAdd*(CANVAS_HEIGHT/CANVAS_WIDTH);
-        }
+    // _checkOrientation(w,h);
 
-        var fOffsetY = ((h / 2) - (destH / 2));
-        var fOffsetX = ((w / 2) - (destW / 2));
-        var fGameInverseScaling = (CANVAS_WIDTH/destW);
+    // console.log("-", CANVAS_WIDTH, CANVAS_HEIGHT, w, h);
 
-        if( fOffsetX*fGameInverseScaling < -EDGEBOARD_X ||  
-            fOffsetY*fGameInverseScaling < -EDGEBOARD_Y ){
-            multiplier = Math.min( h / (CANVAS_HEIGHT-(EDGEBOARD_Y*2)), w / (CANVAS_WIDTH-(EDGEBOARD_X*2)));
-            destW = CANVAS_WIDTH * multiplier;
-            destH = CANVAS_HEIGHT * multiplier;
-            fOffsetY = ( h - destH ) / 2;
-            fOffsetX = ( w - destW ) / 2;
-            
-            fGameInverseScaling = (CANVAS_WIDTH/destW);
-        }
+    // var tmp;
 
-        s_iOffsetX = (-1*fOffsetX * fGameInverseScaling);
-        s_iOffsetY = (-1*fOffsetY * fGameInverseScaling);
-        
-        if(fOffsetY >= 0 ){
-            s_iOffsetY = 0;
-        }
-        
-        if(fOffsetX >= 0 ){
-            s_iOffsetX = 0;
-        }
-        
-        if(s_oInterface !== null){
-            s_oInterface.refreshButtonPos( s_iOffsetX,s_iOffsetY);
-        }
-        if(s_oMenu !== null){
-            s_oMenu.refreshButtonPos( s_iOffsetX,s_iOffsetY);
-        }
-        if(s_oSelectPlayers !== null){
-            s_oSelectPlayers.refreshButtonPos( s_iOffsetX,s_iOffsetY);
-        }
-        if(s_oLevelMenu !== null){
-            s_oLevelMenu.refreshButtonPos( s_iOffsetX,s_iOffsetY);
-        }
-        
-        
-        
-	if(s_bIsIphone){
-            canvas = document.getElementById('canvas');
-            s_oStage.canvas.width = destW*2;
-            s_oStage.canvas.height = destH*2;
-            canvas.style.width = destW+"px";
-            canvas.style.height = destH+"px";
-            var iScale = Math.min(destW / CANVAS_WIDTH, destH / CANVAS_HEIGHT);
-            s_iScaleFactor = iScale*2;
-            s_oStage.scaleX = s_oStage.scaleY = iScale*2;  
-        }else if(s_bMobile && isIOS() === false){
-            $("#canvas").css("width",destW+"px");
-            $("#canvas").css("height",destH+"px");
-        }else{
-            s_oStage.canvas.width = destW;
-            s_oStage.canvas.height = destH;
-            
-            s_iScaleFactor = Math.min(destW / CANVAS_WIDTH, destH / CANVAS_HEIGHT);
-            s_oStage.scaleX = s_oStage.scaleY = s_iScaleFactor; 
-        }
-        
-        if(fOffsetY < 0){
-            $("#canvas").css("top",fOffsetY+"px");
-        }else{
-            $("#canvas").css("top","0px");
-        }
-        
-        $("#canvas").css("left",fOffsetX+"px");
-        
-        fullscreenHandler();
+    // tmp = CANVAS_WIDTH;
+    // CANVAS_WIDTH = CANVAS_HEIGHT;
+    // CANVAS_HEIGHT = tmp;
+
+    // tmp = w;
+    // w = h;
+    // h = tmp;
+
+    // console.log("+", CANVAS_HEIGHT, CANVAS_WIDTH, h, w);
+
+    // s_oStage.regX = CANVAS_WIDTH/2;
+    // s_oStage.regY = CANVAS_HEIGHT/2;
+    // s_oStage.rotation = 90;
+
+    var multiplier = Math.min((h / CANVAS_HEIGHT), (w / CANVAS_WIDTH));
+
+    var destW = CANVAS_WIDTH * multiplier;
+    var destH = CANVAS_HEIGHT * multiplier;
+
+
+    var iAdd = 0;
+    if (destH < h) {
+        iAdd = h - destH;
+        destH += iAdd;
+        destW += iAdd * (CANVAS_WIDTH / CANVAS_HEIGHT);
+    } else if (destW < w) {
+        iAdd = w - destW;
+        destW += iAdd;
+        destH += iAdd * (CANVAS_HEIGHT / CANVAS_WIDTH);
+    }
+
+    var fOffsetY = ((h / 2) - (destH / 2));
+    var fOffsetX = ((w / 2) - (destW / 2));
+    var fGameInverseScaling = (CANVAS_WIDTH / destW);
+
+    if (fOffsetX * fGameInverseScaling < -EDGEBOARD_X ||
+        fOffsetY * fGameInverseScaling < -EDGEBOARD_Y) {
+        multiplier = Math.min(h / (CANVAS_HEIGHT - (EDGEBOARD_Y * 2)), w / (CANVAS_WIDTH - (EDGEBOARD_X * 2)));
+        destW = CANVAS_WIDTH * multiplier;
+        destH = CANVAS_HEIGHT * multiplier;
+        fOffsetY = (h - destH) / 2;
+        fOffsetX = (w - destW) / 2;
+
+        fGameInverseScaling = (CANVAS_WIDTH / destW);
+    }
+
+    s_iOffsetX = (-1 * fOffsetX * fGameInverseScaling);
+    s_iOffsetY = (-1 * fOffsetY * fGameInverseScaling);
+
+    if (fOffsetY >= 0) {
+        s_iOffsetY = 0;
+    }
+
+    if (fOffsetX >= 0) {
+        s_iOffsetX = 0;
+    }
+
+    if (s_oInterface !== null) {
+        s_oInterface.refreshButtonPos(s_iOffsetX, s_iOffsetY);
+    }
+    if (s_oMenu !== null) {
+        s_oMenu.refreshButtonPos(s_iOffsetX, s_iOffsetY);
+    }
+    if (s_oSelectPlayers !== null) {
+        s_oSelectPlayers.refreshButtonPos(s_iOffsetX, s_iOffsetY);
+    }
+    if (s_oLevelMenu !== null) {
+        s_oLevelMenu.refreshButtonPos(s_iOffsetX, s_iOffsetY);
+    }
+
+
+
+    if (s_bIsIphone) {
+        canvas = document.getElementById('canvas');
+        s_oStage.canvas.width = destW * 2;
+        s_oStage.canvas.height = destH * 2;
+        canvas.style.width = destW + "px";
+        canvas.style.height = destH + "px";
+        var iScale = Math.min(destW / CANVAS_WIDTH, destH / CANVAS_HEIGHT);
+        s_iScaleFactor = iScale * 2;
+        s_oStage.scaleX = s_oStage.scaleY = iScale * 2;
+    } else if (s_bMobile && isIOS() === false) {
+        $("#canvas").css("width", destW + "px");
+        $("#canvas").css("height", destH + "px");
+    } else {
+        s_oStage.canvas.width = destW;
+        s_oStage.canvas.height = destH;
+
+        s_iScaleFactor = Math.min(destW / CANVAS_WIDTH, destH / CANVAS_HEIGHT);
+        s_oStage.scaleX = s_oStage.scaleY = s_iScaleFactor;
+    }
+
+    if (fOffsetY < 0) {
+        $("#canvas").css("top", fOffsetY + "px");
+    } else {
+        $("#canvas").css("top", "0px");
+    }
+
+    $("#canvas").css("left", fOffsetX + "px");
+
+    fullscreenHandler();
 };
 
 function _checkOrientation(iWidth,iHeight){
