@@ -37,8 +37,8 @@ function CGfxButtonArrow(iXPos,iYPos,oSprite, oParentContainer, iWidth, iHeight)
         _oButtonContainer = new createjs.Container();
         _oButtonContainer.x = iXPos;
         _oButtonContainer.y = iYPos;
-        _oButtonContainer.regX = iWidth/2;
-        _oButtonContainer.regY = iHeight/2;
+        // _oButtonContainer.regX = iWidth/2;
+        // _oButtonContainer.regY = iHeight/2;
 
         _oButtonContainer.addChild(shape);
         _oButtonContainer.addChild(_oButton);

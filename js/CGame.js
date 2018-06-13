@@ -38,7 +38,7 @@ function CGame(oData){
 
 
     this._init = function(){
-        
+        console.log('CGame._init()');
         setVolume("soundtrack",0.1);
         _bStartGame=true;
         _bUpdateBalls = true;

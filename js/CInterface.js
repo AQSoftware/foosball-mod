@@ -74,7 +74,13 @@ function CInterface(){
         _oScoreTextRed.y = +27;
         _oScoreTextRed.textBaseline = "alphabetic";
         _oContainerScore.addChild(oScorePanelBlue,_oScoreTextBlue,_oScoreTextRed);
-        
+
+        // var shape = new createjs.Shape();
+        // shape.graphics.beginFill("#00ff00").drawRect(0, 0, CANVAS_WIDTH, 4);
+        // shape.x = 0;
+        // shape.y = CANVAS_HEIGHT/2;
+        // _oContainer.addChild(shape);
+
        this.refreshButtonPos(s_iOffsetX,s_iOffsetY);
     };
     
@@ -101,8 +107,8 @@ function CInterface(){
         var oSprite = s_oSpriteLibrary.getSprite("arrow");
         
         if (!s_b2Players){
-            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y:  CANVAS_HEIGHT/2+450};
-            _pStartPosButDownP1 = {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+450};
+            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y:  CANVAS_HEIGHT/2+350};
+            _pStartPosButDownP1 = {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+350};
             _oButUpP1 = new CGfxButtonArrow(_pStartPosButUpP1.x,_pStartPosButUpP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
             _oButUpP1.setMuted(true);
             _oButDownP1 = new CGfxButtonArrow(_pStartPosButDownP1.x,_pStartPosButDownP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
@@ -111,11 +117,11 @@ function CInterface(){
             
         }else{
             // _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+240};
-            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2-450};
-            _pStartPosButDownP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+450};
+            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2-350};
+            _pStartPosButDownP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+350};
             // _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+240};
-            _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+800, y:  CANVAS_HEIGHT/2-450};
-             _pStartPosButDownP2= {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+450};
+            _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+800, y:  CANVAS_HEIGHT/2-350};
+             _pStartPosButDownP2= {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+350};
             _oButUpP1 = new CGfxButtonArrow(_pStartPosButUpP1.x,_pStartPosButUpP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
             _oButUpP1.setMuted(true);
             _oButDownP1 = new CGfxButtonArrow(_pStartPosButDownP1.x,_pStartPosButDownP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
@@ -145,6 +151,8 @@ function CInterface(){
             _oButFullscreen.setPosition(_pStartPosFullscreen.x + iNewX-200, _pStartPosFullscreen.y + iNewY);
         }
         
+        iNewY = 0;
+
         if (s_bMobile){
             if (_bMobileInitialized){
                 if (!s_b2Players){
@@ -153,8 +161,6 @@ function CInterface(){
                 }else{
                     _oButUpP1.setPosition(_pStartPosButUpP1.x+iNewX,_pStartPosButUpP1.y-iNewY);
                     _oButDownP1.setPosition(_pStartPosButDownP1.x+iNewX,_pStartPosButDownP1.y-iNewY);
-                    // _oButDownP1_W.x = _pStartPosButDownP1.x+iNewX
-                    // _oButDownP1_W.y = _pStartPosButDownP1.y-iNewY;
                     _oButUpP2.setPosition(_pStartPosButUpP2.x-iNewX,_pStartPosButUpP2.y-iNewY);
                     _oButDownP2.setPosition(_pStartPosButDownP2.x-iNewX,_pStartPosButDownP2.y-iNewY);
                 }
@@ -194,7 +200,7 @@ function CInterface(){
     };
     
     this.resetFullscreenBut = function(){
-	_oButFullscreen.setActive(s_bFullscreen);
+	    if(_oButFullscreen) _oButFullscreen.setActive(s_bFullscreen);
     };
 
 

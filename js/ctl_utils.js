@@ -3,6 +3,7 @@ var s_iOffsetX;
 var s_iOffsetY;
 var s_bIsIphone = false;
 var s_bIsRetina;
+var forceLandscape = false;
 
 /**
  * jQuery.browser.mobile (http://detectmobilebrowser.com/)
@@ -149,6 +150,7 @@ function inIframe() {
 
 //THIS FUNCTION MANAGES THE CANVAS SCALING TO FIT PROPORTIONALLY THE GAME TO THE CURRENT DEVICE RESOLUTION
 function sizeHandler() {
+    console.log('-------------------- sizeHandler()');
     window.scrollTo(0, 1);
 
     if (!$("#canvas")) {
@@ -168,66 +170,101 @@ function sizeHandler() {
 
     var w = getSize("Width");
 
+    var _w = w;
+    var _h = h;
+
     // _checkOrientation(w,h);
+    forceLandscape = w < h;
 
-    // console.log("-", CANVAS_WIDTH, CANVAS_HEIGHT, w, h);
+    var C_WIDTH = CANVAS_WIDTH;
+    var C_HEIGHT = CANVAS_HEIGHT;
 
-    // var tmp;
+    var C_EDGEBOARD_X = EDGEBOARD_X;
+    var C_EDGEBOARD_Y = EDGEBOARD_Y;
 
-    // tmp = CANVAS_WIDTH;
-    // CANVAS_WIDTH = CANVAS_HEIGHT;
-    // CANVAS_HEIGHT = tmp;
+    console.log("-", C_WIDTH, C_HEIGHT, w, h);
 
-    // tmp = w;
-    // w = h;
-    // h = tmp;
+    // forceLandscape = true;
+    if (forceLandscape) {
 
-    // console.log("+", CANVAS_HEIGHT, CANVAS_WIDTH, h, w);
+        C_WIDTH = CANVAS_HEIGHT;
+        C_HEIGHT = CANVAS_WIDTH;
+    
+        var tmp;
 
-    // s_oStage.regX = CANVAS_WIDTH/2;
-    // s_oStage.regY = CANVAS_HEIGHT/2;
-    // s_oStage.rotation = 90;
+        C_EDGEBOARD_X = EDGEBOARD_Y;
+        C_EDGEBOARD_Y = EDGEBOARD_X;
 
-    var multiplier = Math.min((h / CANVAS_HEIGHT), (w / CANVAS_WIDTH));
+        // tmp = w;
+        // w = h;
+        // h = tmp;
 
-    var destW = CANVAS_WIDTH * multiplier;
-    var destH = CANVAS_HEIGHT * multiplier;
+        tmp = _w;
+        _w = _h;
+        _h = tmp;
+
+        console.log("+", C_WIDTH, C_HEIGHT, w, h);
+        console.log(s_oStage.regX, s_oStage.regY);
+
+        s_oStage.regX = 0;
+        s_oStage.regY = C_WIDTH;
+        s_oStage.rotation = 90;
+    } else {
+        s_oStage.regX = 0;
+        s_oStage.regY = 0;
+        s_oStage.rotation = 0;
+    }
+
+    var multiplier = Math.min((h / C_HEIGHT), (w / C_WIDTH));
+
+    var destW = C_WIDTH * multiplier;
+    var destH = C_HEIGHT * multiplier;
+
+    var _destW = destH;
+    var _destH = destW;
 
 
     var iAdd = 0;
     if (destH < h) {
         iAdd = h - destH;
         destH += iAdd;
-        destW += iAdd * (CANVAS_WIDTH / CANVAS_HEIGHT);
+        destW += iAdd * (C_WIDTH / C_HEIGHT);
     } else if (destW < w) {
         iAdd = w - destW;
         destW += iAdd;
-        destH += iAdd * (CANVAS_HEIGHT / CANVAS_WIDTH);
+        destH += iAdd * (C_HEIGHT / C_WIDTH);
     }
 
     var fOffsetY = ((h / 2) - (destH / 2));
     var fOffsetX = ((w / 2) - (destW / 2));
-    var fGameInverseScaling = (CANVAS_WIDTH / destW);
+    var fGameInverseScaling = (C_WIDTH / destW);
 
-    if (fOffsetX * fGameInverseScaling < -EDGEBOARD_X ||
-        fOffsetY * fGameInverseScaling < -EDGEBOARD_Y) {
-        multiplier = Math.min(h / (CANVAS_HEIGHT - (EDGEBOARD_Y * 2)), w / (CANVAS_WIDTH - (EDGEBOARD_X * 2)));
-        destW = CANVAS_WIDTH * multiplier;
-        destH = CANVAS_HEIGHT * multiplier;
+    if (fOffsetX * fGameInverseScaling < -C_EDGEBOARD_X ||
+        fOffsetY * fGameInverseScaling < -C_EDGEBOARD_Y) {
+
+        var mH = h / (C_HEIGHT - (C_EDGEBOARD_Y * 2));
+        var mW = w / (C_WIDTH - (C_EDGEBOARD_X * 2));
+
+        multiplier = Math.min(mH, mW);
+        destW = C_WIDTH * multiplier;
+        destH = C_HEIGHT * multiplier;
         fOffsetY = (h - destH) / 2;
         fOffsetX = (w - destW) / 2;
 
-        fGameInverseScaling = (CANVAS_WIDTH / destW);
+        fGameInverseScaling = (C_WIDTH / destW);
     }
 
-    s_iOffsetX = (-1 * fOffsetX * fGameInverseScaling);
-    s_iOffsetY = (-1 * fOffsetY * fGameInverseScaling);
+    var _fOffsetY = forceLandscape ? fOffsetX : fOffsetY;
+    var _fOffsetX = forceLandscape ? fOffsetY : fOffsetX;
 
-    if (fOffsetY >= 0) {
+    s_iOffsetX = (-1 * _fOffsetX * fGameInverseScaling);
+    s_iOffsetY = (-1 * _fOffsetY * fGameInverseScaling);
+
+    if (_fOffsetY >= 0) {
         s_iOffsetY = 0;
     }
 
-    if (fOffsetX >= 0) {
+    if (_fOffsetX >= 0) {
         s_iOffsetX = 0;
     }
 
@@ -252,31 +289,36 @@ function sizeHandler() {
         s_oStage.canvas.height = destH * 2;
         canvas.style.width = destW + "px";
         canvas.style.height = destH + "px";
-        var iScale = Math.min(destW / CANVAS_WIDTH, destH / CANVAS_HEIGHT);
+        var iScale = Math.min(destW / C_WIDTH, destH / C_HEIGHT);
         s_iScaleFactor = iScale * 2;
         s_oStage.scaleX = s_oStage.scaleY = iScale * 2;
     } else if (s_bMobile && isIOS() === false) {
         $("#canvas").css("width", destW + "px");
         $("#canvas").css("height", destH + "px");
+        s_oStage.canvas.width = destW * fGameInverseScaling;
+        s_oStage.canvas.height = destH * fGameInverseScaling;
     } else {
         s_oStage.canvas.width = destW;
         s_oStage.canvas.height = destH;
 
-        s_iScaleFactor = Math.min(destW / CANVAS_WIDTH, destH / CANVAS_HEIGHT);
+        s_iScaleFactor = Math.min(destW / C_WIDTH, destH / C_HEIGHT);
         s_oStage.scaleX = s_oStage.scaleY = s_iScaleFactor;
     }
 
-    if (fOffsetY < 0) {
-        $("#canvas").css("top", fOffsetY + "px");
+    if (_fOffsetY < 0) {
+        $("#canvas").css(forceLandscape ? "right" : "top", _fOffsetY + "px");
     } else {
-        $("#canvas").css("top", "0px");
+        $("#canvas").css(forceLandscape ? "right" : "top", "0px");
     }
 
-    $("#canvas").css("left", fOffsetX + "px");
+    $("#canvas").css(forceLandscape ? "top" : "left", _fOffsetX + "px");
+    $("#canvas").css(forceLandscape ? "left" : "right", "");
+
 
     fullscreenHandler();
 };
 
+/*
 function _checkOrientation(iWidth,iHeight){
     if(s_bMobile && ENABLE_CHECK_ORIENTATION){
         if( iWidth>iHeight ){ 
@@ -298,6 +340,7 @@ function _checkOrientation(iWidth,iHeight){
         }
     }
 }
+*/
 
 function playSound(szSound,iVolume,bLoop){
     if (DISABLE_SOUND_MOBILE === false || s_bMobile === false){
