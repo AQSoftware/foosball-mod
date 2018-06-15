@@ -165,6 +165,8 @@ function CEndPanel(oSpriteBg,iWinner){
             $(s_oMain).trigger("show_interlevel_ad");
             $(s_oMain).trigger("end_session");
         }
+
+        defaultLifeCycle.end();
     };
     
     this._onExit = function(){
