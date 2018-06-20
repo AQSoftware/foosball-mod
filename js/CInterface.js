@@ -27,7 +27,7 @@ function CInterface(){
     var _pStartPosButHelp;
 
     var ARROW_BTN_W = 300;
-    var ARROW_BTN_H = 200;    
+    var ARROW_BTN_H = 300;    
     
     this._init = function(){  
         _oContainer = new createjs.Container();

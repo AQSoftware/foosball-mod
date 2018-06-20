@@ -156,13 +156,13 @@ function CGame(oData){
             if (s_bFirstMultiPlayer===true){
                 s_bFirstMultiPlayer = false;
                 s_bFirstPlay = false;
-                new CPanelTutorial();
+                // new CPanelTutorial();
             }
         }
         
         if (s_bFirstPlay===true){
             s_bFirstPlay = false;
-            new CPanelTutorial();
+            // new CPanelTutorial();
         }
         
     };

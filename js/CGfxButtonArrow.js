@@ -20,7 +20,7 @@ function CGfxButtonArrow(iXPos,iYPos,oSprite, oParentContainer, iWidth, iHeight)
     this._init =function(iXPos,iYPos,oSprite, oParentContainer, iWidth, iHeight){
         _bDisabled = false;
         _bMuted = false;
-        _iScaleFactor = .5;
+        _iScaleFactor = .9;
         
         _aCbCompleted=new Array();
         _aCbOwner =new Array();
@@ -33,6 +33,10 @@ function CGfxButtonArrow(iXPos,iYPos,oSprite, oParentContainer, iWidth, iHeight)
         var shape = new createjs.Shape();
         shape.graphics.beginFill("#ff0000").drawRect(0, 0, iWidth, iHeight);
         shape.alpha = 0.01;
+        // shape.alpha = 1.01;
+        shape.regX = iWidth/2;
+        shape.regY = iHeight/2;
+
 
         _oButtonContainer = new createjs.Container();
         _oButtonContainer.x = iXPos;
