@@ -75,6 +75,29 @@ function CInterface(){
         _oScoreTextRed.textBaseline = "alphabetic";
         _oContainerScore.addChild(oScorePanelBlue,_oScoreTextBlue,_oScoreTextRed);
 
+        var txtYou = new createjs.Text("You"," 50px "+PRIMARY_FONT,"#fff");
+        txtYou.textAlign = "left";
+        txtYou.x = -230;
+        txtYou.y = +27;
+        txtYou.textBaseline = "alphabetic";
+        var txtYou2 = txtYou.clone();
+        txtYou2.color = "#000";
+        txtYou2.outline = 15;
+
+        var txtOppo = new createjs.Text("Opponent"," 50px "+PRIMARY_FONT,"#fff");
+        txtOppo.textAlign = "left";
+        txtOppo.x = +150;
+        txtOppo.y = +27;
+        txtOppo.textBaseline = "alphabetic";
+        var txtOppo2 = txtOppo.clone();
+        txtOppo.color = "#000";
+        txtOppo.outline = 15;
+
+        _oContainerScore.addChild(txtYou2);
+        _oContainerScore.addChild(txtYou);
+        _oContainerScore.addChild(txtOppo);
+        _oContainerScore.addChild(txtOppo2);
+
         // var shape = new createjs.Shape();
         // shape.graphics.beginFill("#00ff00").drawRect(0, 0, CANVAS_WIDTH, 4);
         // shape.x = 0;
@@ -107,8 +130,8 @@ function CInterface(){
         var oSprite = s_oSpriteLibrary.getSprite("arrow");
         
         if (!s_b2Players){
-            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y:  CANVAS_HEIGHT/2+350};
-            _pStartPosButDownP1 = {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+350};
+            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y:  CANVAS_HEIGHT/2+0};
+            _pStartPosButDownP1 = {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+0};
             _oButUpP1 = new CGfxButtonArrow(_pStartPosButUpP1.x,_pStartPosButUpP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
             _oButUpP1.setMuted(true);
             _oButDownP1 = new CGfxButtonArrow(_pStartPosButDownP1.x,_pStartPosButDownP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
