@@ -70,7 +70,7 @@ function CGame(oData){
         _oField.y = CANVAS_HEIGHT/2-20;
         //_oField.on("mousedown",this.onField,this);
         s_oStage.addChild(_oField);
-        _oInterface = new CInterface();
+        _oInterface = new CInterface(oData);
         _oInterface.refreshScore(_iScore);           
         _aFieldEdgesBall = new Array();
         

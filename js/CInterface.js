@@ -1,4 +1,4 @@
-function CInterface(){
+function CInterface(oData){
     var _oButExit;
     var _oContainer;
     var _oButFullscreen;
@@ -84,7 +84,7 @@ function CInterface(){
         txtYou2.color = "#000";
         txtYou2.outline = 15;
 
-        var txtOppo = new createjs.Text("Opponent"," 50px "+PRIMARY_FONT,"#fff");
+        var txtOppo = new createjs.Text(oData.aq_api_data.engagementInfo.opponentName," 50px "+PRIMARY_FONT,"#fff");
         txtOppo.textAlign = "left";
         txtOppo.x = +150;
         txtOppo.y = +27;
