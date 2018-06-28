@@ -173,8 +173,12 @@ function sizeHandler() {
     var _w = w;
     var _h = h;
 
-    // _checkOrientation(w,h);
-    forceLandscape = w < h;
+    _checkOrientation(w,h);
+    // ** manually removing landscape forcing
+    forceLandscape = false;
+    // ** normal landscape forcing
+    // forceLandscape = w < h;
+
 
     var C_WIDTH = CANVAS_WIDTH;
     var C_HEIGHT = CANVAS_HEIGHT;
@@ -184,7 +188,6 @@ function sizeHandler() {
 
     console.log("-", C_WIDTH, C_HEIGHT, w, h);
 
-    // forceLandscape = true;
     if (forceLandscape) {
 
         C_WIDTH = CANVAS_HEIGHT;
@@ -318,7 +321,6 @@ function sizeHandler() {
     fullscreenHandler();
 };
 
-/*
 function _checkOrientation(iWidth,iHeight){
     if(s_bMobile && ENABLE_CHECK_ORIENTATION){
         if( iWidth>iHeight ){ 
@@ -340,7 +342,6 @@ function _checkOrientation(iWidth,iHeight){
         }
     }
 }
-*/
 
 function playSound(szSound,iVolume,bLoop){
     if (DISABLE_SOUND_MOBILE === false || s_bMobile === false){
