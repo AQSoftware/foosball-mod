@@ -26,8 +26,8 @@ function CInterface(oData){
     var _oButHelp;
     var _pStartPosButHelp;
 
-    var ARROW_BTN_W = 300;
-    var ARROW_BTN_H = 300;    
+    var ARROW_BTN_W = 350;
+    var ARROW_BTN_H = 350;    
     
     this._init = function(){  
         _oContainer = new createjs.Container();
@@ -130,8 +130,8 @@ function CInterface(oData){
         var oSprite = s_oSpriteLibrary.getSprite("arrow");
         
         if (!s_b2Players){
-            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y:  CANVAS_HEIGHT/2+0};
-            _pStartPosButDownP1 = {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+0};
+            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y:  CANVAS_HEIGHT/2+300};
+            _pStartPosButDownP1 = {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+330};
             _oButUpP1 = new CGfxButtonArrow(_pStartPosButUpP1.x,_pStartPosButUpP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
             _oButUpP1.setMuted(true);
             _oButDownP1 = new CGfxButtonArrow(_pStartPosButDownP1.x,_pStartPosButDownP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
