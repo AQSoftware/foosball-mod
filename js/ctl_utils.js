@@ -173,7 +173,7 @@ function sizeHandler() {
     var _w = w;
     var _h = h;
 
-    _checkOrientation(w,h);
+    // _checkOrientation(w,h);
     // ** manually removing landscape forcing
     forceLandscape = false;
     // ** normal landscape forcing
