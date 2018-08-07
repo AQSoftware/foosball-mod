@@ -77,7 +77,7 @@ function CInterface(oData){
 
         var txtYou = new createjs.Text("You"," 50px "+PRIMARY_FONT,"#fff");
         txtYou.textAlign = "left";
-        txtYou.x = -230;
+        txtYou.x = s_b2Players ? +150 : -230;
         txtYou.y = +27;
         txtYou.textBaseline = "alphabetic";
         var txtYou2 = txtYou.clone();
@@ -85,8 +85,8 @@ function CInterface(oData){
         txtYou2.outline = 15;
 
         var txtOppo = new createjs.Text(oData.aq_api_data.engagementInfo.opponentName," 50px "+PRIMARY_FONT,"#fff");
-        txtOppo.textAlign = "left";
-        txtOppo.x = +150;
+        txtOppo.textAlign = s_b2Players ? "right" : "left";
+        txtOppo.x = s_b2Players ? -150 : +150;
         txtOppo.y = +27;
         txtOppo.textBaseline = "alphabetic";
         var txtOppo2 = txtOppo.clone();
@@ -128,6 +128,8 @@ function CInterface(oData){
         _pStartPosButUpP2;
         _pStartPosButDownP2;
         var oSprite = s_oSpriteLibrary.getSprite("arrow");
+
+        var BTNS_PAD = -100;
         
         if (!s_b2Players){
             _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y:  CANVAS_HEIGHT/2+300};
@@ -140,11 +142,11 @@ function CInterface(oData){
             
         }else{
             // _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+240};
-            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2-350};
-            _pStartPosButDownP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+350};
+            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2-350-BTNS_PAD};
+            _pStartPosButDownP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+350+BTNS_PAD};
             // _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+240};
-            _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+800, y:  CANVAS_HEIGHT/2-350};
-             _pStartPosButDownP2= {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+350};
+            _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+800, y:  CANVAS_HEIGHT/2-350-BTNS_PAD};
+             _pStartPosButDownP2= {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+350+BTNS_PAD};
             _oButUpP1 = new CGfxButtonArrow(_pStartPosButUpP1.x,_pStartPosButUpP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
             _oButUpP1.setMuted(true);
             _oButDownP1 = new CGfxButtonArrow(_pStartPosButDownP1.x,_pStartPosButDownP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
