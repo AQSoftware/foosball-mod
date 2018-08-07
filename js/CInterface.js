@@ -132,8 +132,8 @@ function CInterface(oData){
         var BTNS_PAD = -100;
         
         if (!s_b2Players){
-            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y:  CANVAS_HEIGHT/2+300};
-            _pStartPosButDownP1 = {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+330};
+            _pStartPosButUpP1 = { x: CANVAS_WIDTH / 2 - 850, y:  CANVAS_HEIGHT/2+300};
+            _pStartPosButDownP1 = { x: CANVAS_WIDTH / 2 + 850, y: CANVAS_HEIGHT/2+330};
             _oButUpP1 = new CGfxButtonArrow(_pStartPosButUpP1.x,_pStartPosButUpP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
             _oButUpP1.setMuted(true);
             _oButDownP1 = new CGfxButtonArrow(_pStartPosButDownP1.x,_pStartPosButDownP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
@@ -141,12 +141,12 @@ function CInterface(oData){
             _oButDownP1.getButtonImage().rotation= 180;
             
         }else{
-            // _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+240};
-            _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2-350-BTNS_PAD};
-            _pStartPosButDownP1 = {x: CANVAS_WIDTH/2-800, y: CANVAS_HEIGHT/2+350+BTNS_PAD};
-            // _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+240};
-            _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+800, y:  CANVAS_HEIGHT/2-350-BTNS_PAD};
-             _pStartPosButDownP2= {x: CANVAS_WIDTH/2+800, y: CANVAS_HEIGHT/2+350+BTNS_PAD};
+            // _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-850, y: CANVAS_HEIGHT/2+240};
+            _pStartPosButUpP1 = { x: CANVAS_WIDTH / 2 - 850, y: CANVAS_HEIGHT/2-350-BTNS_PAD};
+            _pStartPosButDownP1 = { x: CANVAS_WIDTH / 2 - 850, y: CANVAS_HEIGHT/2+350+BTNS_PAD};
+            // _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+850, y: CANVAS_HEIGHT/2+240};
+            _pStartPosButUpP2 = { x: CANVAS_WIDTH / 2 + 850, y:  CANVAS_HEIGHT/2-350-BTNS_PAD};
+            _pStartPosButDownP2 = { x: CANVAS_WIDTH / 2 + 850, y: CANVAS_HEIGHT/2+350+BTNS_PAD};
             _oButUpP1 = new CGfxButtonArrow(_pStartPosButUpP1.x,_pStartPosButUpP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
             _oButUpP1.setMuted(true);
             _oButDownP1 = new CGfxButtonArrow(_pStartPosButDownP1.x,_pStartPosButDownP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
