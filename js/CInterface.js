@@ -7,7 +7,7 @@ function CInterface(oData){
     var _fRequestFullScreen = null;
     var _fCancelFullScreen = null;
     var _oContainerScore;
-    var _pStartPosContainerScore; 
+    var _pStartPosContainerScore;
     var _pStartPosFullscreen;
     var _oButUpP1;
     var _oButDownP1;
@@ -27,9 +27,9 @@ function CInterface(oData){
     var _pStartPosButHelp;
 
     var ARROW_BTN_W = 350;
-    var ARROW_BTN_H = 350;    
-    
-    this._init = function(){  
+    var ARROW_BTN_H = 350;
+
+    this._init = function(){
         _oContainer = new createjs.Container();
         _bMobileInitialized = false;
         s_oStage.addChild(_oContainer);
@@ -38,11 +38,11 @@ function CInterface(oData){
         var docEl = doc.documentElement;
         _fRequestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
         _fCancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
-        
+
         if(ENABLE_FULLSCREEN === false){
             _fRequestFullScreen = false;
         }
-        
+
         if (_fRequestFullScreen && !inIframe()){
             oSprite = s_oSpriteLibrary.getSprite("but_fullscreen");
             _pStartPosFullscreen = {x:oSprite.width/4+10,y:oSprite.height/2+10};
@@ -53,7 +53,7 @@ function CInterface(oData){
             // _pStartPosButHelp = {x:oSprite.width/4+10,y:oSprite.height/2+10};
             _pStartPosButHelp = {x:100,y:100};
         }
-                
+
         _pStartPosContainerScore= {x:CANVAS_WIDTH/2,y:83};
         _oContainerScore = new createjs.Container();
         _oContainer.addChild(_oContainerScore);
@@ -106,21 +106,21 @@ function CInterface(oData){
 
        this.refreshButtonPos(s_iOffsetX,s_iOffsetY);
     };
-    
-    this.unload = function(){        
+
+    this.unload = function(){
         s_oStage.removeChild(_oContainer);
         if (_fRequestFullScreen && !inIframe()) {
             _oButFullscreen.unload();
-        }        
+        }
 
         s_oInterface = null;
     };
-    
+
     this.refreshPlayersScore = function (iScoreP1,iScoreP2){
        _oScoreTextBlue.text =  iScoreP1;
        _oScoreTextRed.text = iScoreP2;
     };
-    
+
     this.initMobileButtons = function(){
         _bMobileInitialized = true;
         _pStartPosButUpP1;
@@ -130,7 +130,7 @@ function CInterface(oData){
         var oSprite = s_oSpriteLibrary.getSprite("arrow");
 
         var BTNS_PAD = -100;
-        
+
         if (!s_b2Players){
             _pStartPosButUpP1 = { x: CANVAS_WIDTH / 2 - 850, y:  CANVAS_HEIGHT/2+300};
             _pStartPosButDownP1 = { x: CANVAS_WIDTH / 2 + 850, y: CANVAS_HEIGHT/2+330};
@@ -139,14 +139,14 @@ function CInterface(oData){
             _oButDownP1 = new CGfxButtonArrow(_pStartPosButDownP1.x,_pStartPosButDownP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
             _oButDownP1.setMuted(true);
             _oButDownP1.getButtonImage().rotation= 180;
-            
+
         }else{
             // _pStartPosButUpP1 = {x: CANVAS_WIDTH/2-850, y: CANVAS_HEIGHT/2+240};
-            _pStartPosButUpP1 = { x: CANVAS_WIDTH / 2 - 850, y: CANVAS_HEIGHT/2-350-BTNS_PAD};
-            _pStartPosButDownP1 = { x: CANVAS_WIDTH / 2 - 850, y: CANVAS_HEIGHT/2+350+BTNS_PAD};
+            _pStartPosButUpP1 = { x: CANVAS_WIDTH / 2 - 850, y: CANVAS_HEIGHT/2-250-BTNS_PAD};
+            _pStartPosButDownP1 = { x: CANVAS_WIDTH / 2 - 850, y: CANVAS_HEIGHT/2+250+BTNS_PAD};
             // _pStartPosButUpP2 = {x: CANVAS_WIDTH/2+850, y: CANVAS_HEIGHT/2+240};
-            _pStartPosButUpP2 = { x: CANVAS_WIDTH / 2 + 850, y:  CANVAS_HEIGHT/2-350-BTNS_PAD};
-            _pStartPosButDownP2 = { x: CANVAS_WIDTH / 2 + 850, y: CANVAS_HEIGHT/2+350+BTNS_PAD};
+            _pStartPosButUpP2 = { x: CANVAS_WIDTH / 2 + 850, y:  CANVAS_HEIGHT/2-250-BTNS_PAD};
+            _pStartPosButDownP2 = { x: CANVAS_WIDTH / 2 + 850, y: CANVAS_HEIGHT/2+250+BTNS_PAD};
             _oButUpP1 = new CGfxButtonArrow(_pStartPosButUpP1.x,_pStartPosButUpP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
             _oButUpP1.setMuted(true);
             _oButDownP1 = new CGfxButtonArrow(_pStartPosButDownP1.x,_pStartPosButDownP1.y,oSprite,_oContainer, ARROW_BTN_W, ARROW_BTN_H);
@@ -168,14 +168,14 @@ function CInterface(oData){
         _oButDownP1.addEventListener(ON_MOUSE_UP,function(){s_oGame.setBooleanDown1(false);},this);
         this.refreshButtonPos(s_iOffsetX,s_iOffsetY);
     };
-    
+
     this.refreshButtonPos = function(iNewX,iNewY){
         _oContainerScore.y = _pStartPosContainerScore.y +iNewY;
-        
+
         if (_fRequestFullScreen && !inIframe()) {
             _oButFullscreen.setPosition(_pStartPosFullscreen.x + iNewX-200, _pStartPosFullscreen.y + iNewY);
         }
-        
+
         iNewY = 0;
 
         if (s_bMobile){
@@ -194,7 +194,7 @@ function CInterface(oData){
     };
 
     this.setOnTop = function(){
-       s_oStage.addChildAt(_oContainer,s_oStage.numChildren); 
+       s_oStage.addChildAt(_oContainer,s_oStage.numChildren);
     };
 
     this.refreshScore = function(iValue){
@@ -205,25 +205,25 @@ function CInterface(oData){
     this._onButHelpRelease = function(){
         _oHelpPanel = new CHelpPanel();
     };
-    
+
     this._onButRestartRelease = function(){
         s_oGame.restartGame();
         $(s_oMain).trigger("restart_level", 1);
     };
-    
+
     this.onExitFromHelp = function(){
         _oHelpPanel.unload();
     };
-    
+
     this._onAudioToggle = function(){
         Howler.mute(s_bAudioActive);
         s_bAudioActive = !s_bAudioActive;
     };
-    
+
     this._onExit = function(){
         new CAreYouSurePanel(s_oGame.onExit);
     };
-    
+
     this.resetFullscreenBut = function(){
 	    if(_oButFullscreen) _oButFullscreen.setActive(s_bFullscreen);
     };
@@ -233,19 +233,19 @@ function CInterface(oData){
         // s_oGame.gameOver();
         // return;
 
-        if(s_bFullscreen) { 
+        if(s_bFullscreen) {
     		_fCancelFullScreen.call(window.document);
 	    }else{
 		    _fRequestFullScreen.call(window.document.documentElement);
 	    }
-	
+
 	    sizeHandler();
     };
-    
+
     s_oInterface = this;
-    
+
     this._init();
-    
+
     return this;
 }
 
