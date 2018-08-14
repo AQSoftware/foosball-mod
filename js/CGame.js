@@ -392,15 +392,22 @@ function CGame(oData){
     this.gameOver = function(iWinner){
         
         _oEndPanel = CEndPanel(s_oSpriteLibrary.getSprite('msg_box'),iWinner);
+
+        var winnerName = '';
+
         if (iWinner===0){
             _iScore = 100*_iPlayer1Points;
             _iScore-=50*_iPlayer2Points;
+            winnerName = oData.aq_api_data.engagementInfo.opponentName;
+        }
+        else {
+            winnerName = 'You';
         }
         
         if (!s_bFriendly){
             saveItem("score_foosball_"+s_oLevelSettings.getCurrentLevel(),_iScore);
         }
-        _oEndPanel.show(_iScore,iWinner);
+        _oEndPanel.show(_iScore, iWinner, winnerName);
     };
     
     this.collideBallWithPlayer = function(oBall,aStickPlayers){

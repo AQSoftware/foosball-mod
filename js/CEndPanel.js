@@ -110,7 +110,7 @@ function CEndPanel(oSpriteBg,iWinner){
     this._initListener = function(){
     };
     
-    this.show = function(iScore,iWinner){
+    this.show = function(iScore,iWinner, name){
         _iGlobalScore = 0;
         if (iWinner===0||s_b2Players){
 	_oEndSound = playSound("applause",1,false);
@@ -134,8 +134,10 @@ function CEndPanel(oSpriteBg,iWinner){
         }
         
         if (s_b2Players===true){
-            _oMsgTextBack.text = TEXT_WIN_2PLAYERS+iPlayerWin+TEXT_WIN_2PLAYERS_2;
-            _oMsgText.text = TEXT_WIN_2PLAYERS+iPlayerWin+TEXT_WIN_2PLAYERS_2;
+            // _oMsgTextBack.text = TEXT_WIN_2PLAYERS+iPlayerWin+TEXT_WIN_2PLAYERS_2;
+            // _oMsgText.text = TEXT_WIN_2PLAYERS+iPlayerWin+TEXT_WIN_2PLAYERS_2;
+            _oMsgTextBack.text = name.toUpperCase() + TEXT_WIN_2PLAYERS_2;
+            _oMsgText.text = name.toUpperCase() + TEXT_WIN_2PLAYERS_2;
         }
         
         if (!s_bFriendly){
@@ -166,7 +168,9 @@ function CEndPanel(oSpriteBg,iWinner){
             $(s_oMain).trigger("end_session");
         }
 
-        defaultLifeCycle.end();
+        setTimeout(function () {
+            defaultLifeCycle.end();
+        }, AQ_END_DELAY_MSECS);
     };
     
     this._onExit = function(){
