@@ -482,6 +482,16 @@ function CGame(oData){
             _oInterface.refreshPlayersScore(_iPlayer1Points,_iPlayer2Points);
             this.showGoalText(0);
             if (_iPlayer1Points===POINTS_TO_WIN){
+                //return result
+                var param = {
+                  winCriteria: 1,
+                  resultImageUrl: 'https://s3.amazonaws.com/famers/720/F1044361239839GTDYWX.jpg',
+                  score: {
+                      value: POINTS_TO_WIN
+                  }
+                }
+                defaultLifeCycle.setResult(param);
+
                 setTimeout (function(){s_oGame.gameOver(0)},TIME_GOAL_ANIMATION);
 
                 if (s_bFriendly===false){
@@ -504,6 +514,16 @@ function CGame(oData){
             _oInterface.refreshPlayersScore(_iPlayer1Points,_iPlayer2Points);
             this.showGoalText(1);
             if (_iPlayer2Points===POINTS_TO_WIN){
+                //return result
+                var param = {
+                  winCriteria: 0,
+                  resultImageUrl: 'https://s3.amazonaws.com/famers/720/F1044361239839GTDYWX.jpg',
+                  score: {
+                      value: POINTS_TO_WIN
+                  }
+                }
+                defaultLifeCycle.setResult(param);
+
                 setTimeout (function(){s_oGame.gameOver(1)},TIME_GOAL_ANIMATION);
             }else{
                 _bInputUpdate = false;
