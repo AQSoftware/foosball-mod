@@ -45,7 +45,7 @@ function CGame(oData){
         _bGoalCheck = true;
         _bInputUpdate = false;
         _bScalarProduct = true;
-        _iScore=0;          
+        _iScore=0;
         _iPlayer1Points=0;
         _iPlayer2Points=0;
         _vSafePos = new CVector2();
@@ -71,10 +71,10 @@ function CGame(oData){
         //_oField.on("mousedown",this.onField,this);
         s_oStage.addChild(_oField);
         _oInterface = new CInterface(oData);
-        _oInterface.refreshScore(_iScore);           
+        _oInterface.refreshScore(_iScore);
         _aFieldEdgesBall = new Array();
-        
-        
+
+
         //1664
        _aFieldEdgesBall[HORIZONTAL_LINE_UP]=new CEdge(309,210,1608,210,5,false).getModel(); //Horizontal Line Up;
        _aFieldEdgesBall[HORIZONTAL_LINE_DOWN]= new CEdge(1608,798,309,798,5,false).getModel(); //Horizontal Line Down;
@@ -84,47 +84,47 @@ function CGame(oData){
        _aFieldEdgesBall[VERTICAL_LINE_RIGHT_DOWN] = new CEdge(1608,639,1608,799,5,false).getModel(); //Vertical Line Right Down;
         _oBall = new CBall(CANVAS_WIDTH/2,CANVAS_HEIGHT/2+230,s_oSpriteLibrary.getSprite("ball"),"ball_1",s_oStage);
         _oBall.setVisible(false);
-        
+
         _aHalfUpEdges = [_aFieldEdgesBall[HORIZONTAL_LINE_UP],_aFieldEdgesBall[VERTICAL_LINE_LEFT_UP],_aFieldEdgesBall[VERTICAL_LINE_RIGHT_UP]];
         _aHalfDownEdges = [_aFieldEdgesBall[HORIZONTAL_LINE_DOWN],_aFieldEdgesBall[VERTICAL_LINE_LEFT_DOWN],_aFieldEdgesBall[VERTICAL_LINE_RIGHT_DOWN]];
-        
-        
+
+
         _aPlayer1Stick[GOALKEEPER]=new CStick(280+67,CANVAS_HEIGHT+200,BLUE_STICK, 1150,1410,[{y2: 475, y1:514}],GOALKEEPER,PLAYER_SPEED_STICKS);
-        
+
         _aPlayer1Stick[DEFENDER]=new CStick(430+90,CANVAS_HEIGHT+160,BLUE_STICK, 1140,1350,[{y2:320,y1:360},
                                                                                                                               {y2: 633, y1: 673}],DEFENDER,PLAYER_SPEED_STICKS);
-                                                                                                                          
+
         _aPlayer1Stick[MIDFIELDER]=new CStick(800+66,CANVAS_HEIGHT+100,BLUE_STICK, 1145,1210,[{y2: 253, y1:292},
                                                                                                                                 {y2: 407, y1:450},
                                                                                                                                 {y2: 560, y1:600},
                                                                                                                                 { y2: 714, y1:752}],MIDFIELDER,PLAYER_SPEED_STICKS);
-                                                                                                                            
+
         _aPlayer1Stick[STRIKER] =new CStick(1180+32,CANVAS_HEIGHT+160,BLUE_STICK, 1155,1320,[{y2:305,y1:340},
                                                                                                                                 {y2: 483,y1: 517},
                                                                                                                                 {y2:668,y1:706}],STRIKER,PLAYER_SPEED_STICKS);
-        
+
         _aPlayer2Stick[GOALKEEPER] = new CStick(CANVAS_WIDTH-400+51,-270,RED_STICK, -400,-130,[{y1:475,y2:514}],GOALKEEPER,CPU_SPEED_STICKS);
-        
+
         _aPlayer2Stick[DEFENDER] = new CStick(CANVAS_WIDTH-550+27,-240,RED_STICK, -335,-130,[{y1:317,y2:357},
                                                                                                                              {y1: 630, y2: 670}],DEFENDER,CPU_SPEED_STICKS);
-                                                                                                                         
+
         _aPlayer2Stick[MIDFIELDER]= new CStick(CANVAS_WIDTH-920+40,-165,RED_STICK, -190, -130,[{y1: 248, y2:287},
                                                                                                                               {y1: 402, y2:440},
                                                                                                                               {y1: 555, y2:592},
                                                                                                                               { y1: 709, y2:748}],MIDFIELDER,CPU_SPEED_STICKS);
-                                                                                                                          
+
         _aPlayer2Stick[STRIKER] = new CStick(CANVAS_WIDTH-1300+75,-237,RED_STICK, -320, -155,[{y1:300,y2:338},
                                                                                                                                 {y1: 485,y2: 523},
                                                                                                                                 {y1:665,y2:703}],STRIKER,CPU_SPEED_STICKS);
-                                                                                                                            
+
         _aHalfLeftSticks = [_aPlayer1Stick[GOALKEEPER],_aPlayer1Stick[DEFENDER], _aPlayer1Stick[MIDFIELDER],_aPlayer2Stick[STRIKER]];
         _aHalfRightSticks = [_aPlayer2Stick[GOALKEEPER],_aPlayer2Stick[DEFENDER], _aPlayer2Stick[MIDFIELDER],_aPlayer1Stick[STRIKER]];
-        
+
         _aPositionXCpu = [_aPlayer2Stick[GOALKEEPER].getX(),
                                  _aPlayer2Stick[DEFENDER].getX(),
                                  _aPlayer2Stick[MIDFIELDER].getX(),
                                  _aPlayer2Stick[STRIKER].getX()];
-        
+
         var oSprite = s_oSpriteLibrary.getSprite("arena");
         _oArena = new createBitmap(oSprite,oSprite.width,oSprite.height);
         _oArena.x = _aFieldEdgesBall[HORIZONTAL_LINE_UP].getPointA().getX()-87;
@@ -138,20 +138,20 @@ function CGame(oData){
         s_oStage.addChild(_oBallMask);
         _oBall.getObject().mask = _oBallMask;
         _oInterface.setOnTop();
-        
+
         if (!s_bMobile){
             document.onkeydown = this.keyDownKeyBoard;
             document.onkeyup = this.keyUpKeyBoard;
-            
+
         }else{
             _oInterface.initMobileButtons();
         }
-        
+
         oSprite = s_oSpriteLibrary.getSprite("but_kickoff");
         _oButStartGame = new CGfxButton(CANVAS_WIDTH*0.5,CANVAS_HEIGHT*0.5+300,oSprite,s_oStage);
         _oButStartGame.pulseAnimation();
         _oButStartGame.addEventListener(ON_MOUSE_DOWN,this.onMouseDown,this);
-        
+
         if (s_b2Players===true&&!s_bMobile){
             if (s_bFirstMultiPlayer===true){
                 s_bFirstMultiPlayer = false;
@@ -159,19 +159,19 @@ function CGame(oData){
                 // new CPanelTutorial();
             }
         }
-        
+
         if (s_bFirstPlay===true){
             s_bFirstPlay = false;
             // new CPanelTutorial();
         }
-        
+
     };
-    
+
     this.keyUpKeyBoard = function(evt){
-            if(!evt){ 
-                evt = window.event; 
-            } 
-            evt.preventDefault(); 
+            if(!evt){
+                evt = window.event;
+            }
+            evt.preventDefault();
            switch (evt.keyCode){
                case 87: _bUP1 = false; break;
                case 83: _bDOWN1 = false; break;
@@ -179,18 +179,18 @@ function CGame(oData){
                case 40:  _bDOWN2 = false; break;
            }
         };
-        
+
         this.keyDownKeyBoard = function(evt){
-            if(!evt){ 
-                evt = window.event; 
-             } 
-            evt.preventDefault(); 
+            if(!evt){
+                evt = window.event;
+             }
+            evt.preventDefault();
            switch (evt.keyCode){
                case 87: _bUP1 = true; break;
                case 83: _bDOWN1 = true; break;
                case 38: _bUP2 = true; break;
                case 40:  _bDOWN2 = true; break;
-               case 32: 
+               case 32:
                    if (evt.keyCode===32){
                     if (_bBallSpin&&_bPaused === false){
                         _oParent.onMouseDown();
@@ -198,9 +198,9 @@ function CGame(oData){
                 }
                 break;
            }
-           evt.preventDefault();  
+           evt.preventDefault();
         };
-    
+
     this.AICpu = function (oBall, aSticks) {
 
         var iSector = getNearestNumber(_aPositionXCpu, oBall.getX());
@@ -299,30 +299,30 @@ function CGame(oData){
 
 
     };
-        
+
         this.setBooleanUp1 = function(bVal){
             _bUP1 = bVal;
         };
-        
+
         this.setBooleanDown1 = function(bVal){
             _bDOWN1 = bVal;
         };
-        
+
         this.setBooleanUp2 = function(bVal){
             _bUP2 = bVal;
         };
-        
+
         this.setBooleanDown2 = function(bVal){
             _bDOWN2 = bVal;
         };
-        
+
         this.onMouseDown = function(){
             _oButStartGame.setVisible(false);
             _bBallSpin = false;
-            
+
             playSound("whistle",1,false);
 
-            var vLaunch = new CVector2( randomFloatBetween(0.05,0.1)*randomSign(), -1);            
+            var vLaunch = new CVector2( randomFloatBetween(0.05,0.1)*randomSign(), -1);
             vLaunch.normalize();
             vLaunch.scalarProduct(BALL_START_VELOCITY);
             _oBall.vCurForce().setV(vLaunch);
@@ -336,7 +336,7 @@ function CGame(oData){
 
             setTimeout(function(){playSound("ball_wall",1,false);},250);
         };
-        
+
         this.collideCircleWithEdges = function(oBall,aEdge){
             for (var i=0;i<aEdge.length;i++){
                 var oInfo = collideEdgeWithCircle(aEdge[i],oBall.vPos(),oBall.getRadius() );
@@ -352,7 +352,7 @@ function CGame(oData){
                 }
             }
         };
-        
+
         this.onField = function(evt){
            var vDir = new CVector2();
            vDir.set(evt.stageX/s_iScaleFactor,evt.stageY/s_iScaleFactor);
@@ -361,36 +361,36 @@ function CGame(oData){
            vDir.scalarProduct(1);
            _oBall.vCurForce().setV(vDir);
         };
-     
-    
+
+
     this.unload = function(){
         _bStartGame = false;
-        
+
         _oInterface.unload();
         if(_oEndPanel !== null){
             _oEndPanel.unload();
         }
-        
+
         createjs.Tween.removeAllTweens();
         s_oStage.removeAllChildren();
 
-           
+
     };
- 
+
     this.onExit = function(){
         $(s_oMain).trigger("end_session");
-        
+
         s_oGame.unload();
         s_oMain.gotoMenu();
     };
-    
+
     this._onExitHelp = function () {
          _bStartGame = true;
          $(s_oMain).trigger("start_level",1);
     };
-    
+
     this.gameOver = function(iWinner){
-        
+
         _oEndPanel = CEndPanel(s_oSpriteLibrary.getSprite('msg_box'),iWinner);
 
         var winnerName = '';
@@ -403,13 +403,13 @@ function CGame(oData){
         else {
             winnerName = 'You';
         }
-        
+
         if (!s_bFriendly){
             saveItem("score_foosball_"+s_oLevelSettings.getCurrentLevel(),_iScore);
         }
         _oEndPanel.show(_iScore, iWinner, winnerName);
     };
-    
+
     this.collideBallWithPlayer = function(oBall,aStickPlayers){
         for (var i=0;i<aStickPlayers.length;i++){
             // sticks
@@ -429,12 +429,12 @@ function CGame(oData){
                         var iHalfWidth = (oEdgePlayer.getLength()*0.5);
                         var iMaxAngleRot   = 30;
                         var iMinVelBall       = 23/PHYSICS_ITERATIONS;
-                        var iVariableVelBall = 23/PHYSICS_ITERATIONS;                        
+                        var iVariableVelBall = 23/PHYSICS_ITERATIONS;
                         var vDirBall = new CVector2();
-                        
+
                         iQuantityRot = (iDistFromCenter/iHalfWidth);
 
-                        var iCurAngleRot = iMaxAngleRot*iQuantityRot; 
+                        var iCurAngleRot = iMaxAngleRot*iQuantityRot;
                             iCurAngleRot = degreesToRadians(iCurAngleRot);
                         if ( oInfo.closest_point.getY() > oEdgePlayer.m_pCenter().getY() ){
                             if (aStickPlayers[i].getColorStick()===BLUE_STICK){
@@ -449,7 +449,7 @@ function CGame(oData){
                                 vPlayerNormal.rotate(-iCurAngleRot);
                             }
                         }
-                        
+
                         vDirBall.setV(vPlayerNormal);
                         vDirBall.normalize();
                         vDirBall.scalarProduct( (1-iQuantityRot)*iVariableVelBall + iMinVelBall);
@@ -466,13 +466,13 @@ function CGame(oData){
                                                 _oSound = playSound("ball_kick",0.6,false);
 
                     }
-                       
-                    
+
+
                         }
                 }
             }
     };
-    
+
     this.goalCheck = function(){
         if (_oBall.getX()>1618){
             playSound("goal",1,false);
@@ -483,19 +483,19 @@ function CGame(oData){
             this.showGoalText(0);
             if (_iPlayer1Points===POINTS_TO_WIN){
                 setTimeout (function(){s_oGame.gameOver(0)},TIME_GOAL_ANIMATION);
-                
+
                 if (s_bFriendly===false){
                     if (s_iLastLevel<s_oLevelSettings.getNextLevel()){
                         saveItem("level_foosball",s_oLevelSettings.getNextLevel());
-                        
+
                     }
                 }
             }else{
                 _bInputUpdate = false;
-                setTimeout(this.afterGoal,2000);
+                setTimeout(this.afterGoal,TIME_GOAL_ANIMATION);
             }
         }
-        
+
         if ( _oBall.getX()<299){
             playSound("goal",1,false);
             _bGoalCheck = false;
@@ -511,7 +511,7 @@ function CGame(oData){
             }
         }
     };
-    
+
     this.showGoalText = function (iPlayer) {
             var shape = new createjs.Shape();
             shape.graphics.beginFill("#000000").drawRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
@@ -551,13 +551,13 @@ function CGame(oData){
        _bGoalCheck = true;
        _bInputUpdate = false;
     };
-    
+
     this.update = function(){
         if (!_bPaused){
             if (_bUpdateBalls){
-               for (var i=0;i<PHYSICS_ITERATIONS;i++){ 
+               for (var i=0;i<PHYSICS_ITERATIONS;i++){
                     _oBall.vPos().addV(_oBall.vCurForce());
-               
+
                     if (_oBall.vPos().getX()<CANVAS_WIDTH*0.5){
                         this.collideBallWithPlayer(_oBall,_aHalfLeftSticks);
                     }else{
@@ -575,12 +575,12 @@ function CGame(oData){
               }
 
             };
-            
+
             _oBall.updateSpritePosition();
             if (_bGoalCheck){
                     this.goalCheck();
               }
-            
+
             if (_bInputUpdate){
                 if (_bUP1){
                     for (var i=0; i<_aPlayer1Stick.length;i++){
@@ -610,14 +610,14 @@ function CGame(oData){
             }
             this.checkBallSlow();
         }
-        
+
         for (var i=0;i<_aPlayer2Stick.length;i++){
             _aPlayer1Stick[i].update();
             _aPlayer2Stick[i].update();
         }
-        
+
     };
-    
+
     this.checkBallSlow = function(){
         if(_oBall.vCurForce().getX()+_oBall.vCurForce().getY()<0.4&&_oBall.vCurForce().getX()+_oBall.vCurForce().getY()>-0.4){
             _bScalarProduct=false;
@@ -625,7 +625,7 @@ function CGame(oData){
             _bScalarProduct=true;
         }
     };
-    
+
     this.setPause = function(bVal){
         _bPaused = bVal;
     };
@@ -635,12 +635,12 @@ function CGame(oData){
     };
 
     s_oGame=this;
-    
+
     POINTS_TO_LOSE = oData.points_to_lose;
     START_SCORE = oData.starting_points;
-    
+
     AD_SHOW_COUNTER = oData.ad_show_counter;
-    
+
     _oParent=this;
     this._init();
 }

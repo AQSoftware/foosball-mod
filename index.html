@@ -45,7 +45,7 @@
         <script type="text/javascript" src="js/CPanelTutorial.js"></script>
         <script type="text/javascript" src="js/CPause.js"></script>
         <script type="text/javascript" src="js/CMsgBox.js"></script>
-        
+
     </head>
     <body ondragstart="return false;" ondrop="return false;" style="background-color: #000;">
 	<div style="position: fixed; background-color: transparent; top: 0px; left: 0px; width: 100%; height: 100%"></div>
@@ -70,31 +70,31 @@
             // $(document).ready(onDocReady);
             function onDocReady(data){
                      var oMain = new CMain({
-                                            
+
                                             fullscreen:true, //SET THIS TO FALSE IF YOU DON'T WANT TO SHOW FULLSCREEN BUTTON
-                                            check_orientation:true,     //SET TO FALSE IF YOU DON'T WANT TO SHOW ORIENTATION ALERT ON MOBILE DEVICES   
-                                            level_menu_rows: 1,     //SET NUM ROW ON LEVEL MENU 
+                                            check_orientation:true,     //SET TO FALSE IF YOU DON'T WANT TO SHOW ORIENTATION ALERT ON MOBILE DEVICES
+                                            level_menu_rows: 1,     //SET NUM ROW ON LEVEL MENU
                                             level_menu_cols: 5,     //SET NUM COLS ON LEVEL MENU
-                                            num_goal_friendly: 7,   //SET NUM GOAL FOR WIN IN FRIENDLY MODE
+                                            num_goal_friendly: 3,   //SET NUM GOAL FOR WIN IN FRIENDLY MODE
                                             cpu_speed_friendly: 5,  //SET CPU MOVEMENT SPEED, 10 = YOUR MOVEMENT SPEED
                                             aq_api_data: data       // AQ API data passed from onData event
                                            });
-                                           
-                                           
+
+
                     $(oMain).on("start_session", function(evt) {
                             if(getParamValue('ctl-arcade') === "true"){
                                 parent.__ctlArcadeStartSession();
                             }
                             //...ADD YOUR CODE HERE EVENTUALLY
                     });
-                     
+
                     $(oMain).on("end_session", function(evt) {
                            if(getParamValue('ctl-arcade') === "true"){
                                parent.__ctlArcadeEndSession();
                            }
                            //...ADD YOUR CODE HERE EVENTUALLY
                     });
-                    
+
                     $(oMain).on("save_score", function(evt,iScore, szMode) {
                            if(getParamValue('ctl-arcade') === "true"){
                                parent.__ctlArcadeSaveScore({score:iScore, mode: szMode});
@@ -115,13 +115,13 @@
                            }
                            //...ADD YOUR CODE HERE EVENTUALLY
                     });
-                    
+
                     $(oMain).on("show_interlevel_ad", function(evt) {
                            if(getParamValue('ctl-arcade') === "true"){
                                parent.__ctlArcadeShowInterlevelAD();
                            }
                     });
-                    
+
                     $(oMain).on("share_event", function(evt, iScore) {
                            if(getParamValue('ctl-arcade') === "true"){
                                parent.__ctlArcadeShareEvent({   img: TEXT_SHARE_IMAGE,
@@ -131,11 +131,11 @@
                            }
                            //...ADD YOUR CODE HERE EVENTUALLY
                     });
-					 
-                    if(isIOS()){ 
-                        setTimeout(function(){sizeHandler();},200); 
-                    }else{ sizeHandler(); } 
-                                         
+
+                    if(isIOS()){
+                        setTimeout(function(){sizeHandler();},200);
+                    }else{ sizeHandler(); }
+
            };
 
         </script>
