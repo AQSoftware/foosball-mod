@@ -75,7 +75,8 @@ function CInterface(oData){
         _oScoreTextRed.textBaseline = "alphabetic";
         _oContainerScore.addChild(oScorePanelBlue,_oScoreTextBlue,_oScoreTextRed);
 
-        var txtYou = new createjs.Text("You"," 50px "+PRIMARY_FONT,"#fff");
+
+        var txtYou = new createjs.Text(s_b2Players ? oData.aq_api_data.source.displayName : "You"," 50px "+PRIMARY_FONT,"#fff");
         txtYou.textAlign = "left";
         txtYou.x = s_b2Players ? +150 : -230;
         txtYou.y = +27;
