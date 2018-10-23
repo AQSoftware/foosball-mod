@@ -217,7 +217,8 @@ function CMain(oData){
          * to compile to ONE/TWO players please swap the comment on the two statements below 
          * */
         // s_b2Players = false;// ONE player
-        s_b2Players = true;// TWO players
+        // s_b2Players = true;// TWO players
+        s_b2Players = _oData.aq_api_data.isSinglePlayer == false;
 
         s_oMain.gotoGame();
     };    
