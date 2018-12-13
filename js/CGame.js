@@ -484,7 +484,7 @@ function CGame(oData){
             if (_iPlayer1Points===POINTS_TO_WIN){
                 //return result
                 var param = {
-                  winCriteria: 1,
+                  winCriteria: 0,
                   resultImageUrl: 'https://s3.amazonaws.com/famers/720/F1044361239839GTDYWX.jpg',
                   score: {
                       value: POINTS_TO_WIN
@@ -516,7 +516,7 @@ function CGame(oData){
             if (_iPlayer2Points===POINTS_TO_WIN){
                 //return result
                 var param = {
-                  winCriteria: 0,
+                  winCriteria: 1,
                   resultImageUrl: 'https://s3.amazonaws.com/famers/720/F1044361239839GTDYWX.jpg',
                   score: {
                       value: POINTS_TO_WIN
